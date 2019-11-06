@@ -1,87 +1,96 @@
 import React from 'react';
 import axios from 'axios';
+import { newExpression } from '@babel/types';
 
 class Create extends React.Component {
-  constructor(props) {
+  constructor(props){
     super(props);
-    this.state = {title: '',
-                  year: '',
-                  poster: ''};
 
-    this.handleChangeMovieTitle = this.handleChangeMovieTitle.bind(this);
-    this.handleChangeMovieYear = this.handleChangeMovieYear.bind(this);
-    this.handleChangeMoviePoster = this.handleChangeMoviePoster.bind(this);
+    this.state = {Title:'',
+                  Year:'',
+                Poster:''};
+
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleMovieTitleChange = this.handleMovieTitleChange.bind(this);
+    this.handleMovieYearChange = this.handleMovieYearChange.bind(this);
+    this.handleMoviePosterChange = this.handleMoviePosterChange.bind(this);
   }
-  handleChangeMovieTitle(e) {
-    this.setState({title: e.target.value});
-  }
-  handleChangeMovieYear(e) {
-    this.setState({year: e.target.value});
-  }
-  handleChangeMoviePoster(e){
-    this.setState({poster: e.target.value});
-  }
-
-  handleSubmit(e) {
-    alert('Movie: ' + this.state.title + "\nYear: " + this.state.year + "\nPoster URL: " + this.state.poster);
-    console.log("Movie: " + this.state.title + "\nYear: " + this.state.year + "\nPoster URL: " +  this.state.poster);
-    e.preventDefault();
   
+  handleMovieTitleChange(e){
+    this.setState({Title: e.target.value});
+  }
 
-  const newMovie = {
-    title:this.state.title,
-    year:this.state.year,
-    poster:this.state.poster
-  }//const
+  handleMovieYearChange(e){
+    this.setState({Year: e.target.value});
+  }
 
-  axios.post('http://localhost:4000/api/movies',newMovie)
-    .then()
-    .catch();
+  handleMoviePosterChange(e){
+    this.setState({Poster: e.target.value});
+  }
 
- }//handle submit 
- 
- 
+  handleSubmit(e){
+    alert(this.state.Title+ "      " + this.state.Year 
+    +"       "+ this.state.Poster);
+    e.preventDefault();
+    
+    
+                const newMovie = {
+                  title: this.state.Title,
+                  year: this.state.Year,
+                  poster: this.state.Poster
+                };
+          axios.post('http://localhost:4000/api/movies',newMovie) 
+          .then()
+          .catch();
+          
+
+          this.setState({Title:'',
+                  Year:'',
+                Poster:''});    
+  }
+
   render() {
     return (
       <div>
-        <h3> Hello from the Create component</h3>
-      
-      <form onSubmit={this.handleSubmit}>
+        <h1>Hello from Create component</h1>
+        <form onSubmit={this.handleSubmit}>
         <div className='form-group'>
-        <label>
-           Movie Title:
-        </label>
-          <input type="text" 
-          value={this.state.title} 
-          onChange={this.handleChangeMovieTitle} />
-        
-        </div>
-        <div className='form-group'>
-        <label>
-          Year Released:
-        </label>
-          <input type="text" 
-          value={this.state.year} 
-          onChange={this.handleChangeMovieYear} />
-        
-        </div>
-        <div className='MoviePoster'>
-        <label>
-          Movie Poster:
-         </label> 
-         <textarea
-          rows='3'
+          <label>Movie Title</label>
+          <input
+          type='text'
           className='form-control'
-          value={this.state.poster} 
-          onChange={this.handleChangeMoviePoster} />
+          value={this.state.Title}
+          onChange={this.handleMovieTitleChange}
+          ></input>
         </div>
-        <input type="submit" value="Submit" />
-      </form>
+        <div className='form-group'>
+          <label>Movie Year</label>
+          <input
+          type='text'
+          className='form-control'
+          value={this.state.Year}
+          onChange={this.handleMovieYearChange}
+          ></input>
+        </div>
+        <div className='form-group'>
+          <label>Movie Poster Url</label>
+          <textarea
+          row='3'
+          className='form-control'
+          value={this.state.Poster}
+          onChange={this.handleMoviePosterChange}
+          ></textarea>
+        </div>
+        <div>
+          <input
+          type="submit"
+          value="Add Movie">
+          </input>
+        </div>
+        </form>
       </div>
     );
   }
-  
 }
 
 export default Create;

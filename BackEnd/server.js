@@ -86,6 +86,17 @@ app.post('/api/movies', (req, res)=> {
         poster:req.body.poster
     });
 })
+
+//Delete a movie
+app.delete('api/movies/:id', (req,res)=>{
+    console.log(req.params.id);
+
+    MovieModel.deleteOne({_id:req.params.id}, (error,data)=>{
+        if(error)
+        res.json(error);
+        res.json(data);
+    })
+})
 //Method to get id
 app.get('/api/moives/:id', (req,res)=> {
     console.log(req.params.id);

@@ -3,6 +3,7 @@ import './App.css';
 import Read from './components/read';
 import Create from './components/create';
 import Content from './components/content';
+import Edit from './components/edit';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -30,6 +31,7 @@ class App extends React.Component {
               <Route exact path="/" component={Content}/>
               <Route path="/create" component={Create}/>
               <Route path="/read" component={Read}/>
+              <Route path="/edit" component={Edit}/>
             </Switch>
         </div>
     </BrowserRouter>
